@@ -8,7 +8,6 @@ export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <div className="flex flex-col min-h-screen">
-        <Header />
         <main className="flex-1 container py-8">
             <div className="mb-6">
                 <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>

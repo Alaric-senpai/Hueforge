@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { db, collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc, serverTimestamp } from "./firebase-admin";
+import { db, collection, addDoc, getDocs, query, where, doc, deleteDoc, updateDoc,  } from "./firebase";
 import type { Palette, PaletteData } from "@/types";
+import { serverTimestamp } from "firebase/firestore";
 
 export async function savePalette(paletteData: Omit<Palette, "id" | "createdAt" | "updatedAt">): Promise<{ success: boolean; error?: string }> {
   try {

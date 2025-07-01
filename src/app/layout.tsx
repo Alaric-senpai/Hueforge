@@ -2,13 +2,28 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
+import { Header } from '@/components/layout/header';
 
 export const metadata: Metadata = {
-  title: 'Palette Prodigy',
+  title: 'Hue forge',
   description: 'Generate, customize, and manage color palettes with a premium design experience.',
   icons: {
     icon: '/favicon.ico',
   },
+  openGraph: {
+    title: 'Hue forge',
+    description: 'Generate, customize, and manage color palettes with a premium design experience.',
+    images: [
+      {
+        url: '/images/logo.png'
+      }
+    ]
+  },
+  authors:[
+    {
+      name: 'Kahuho charles',
+    }
+  ]
 };
 
 export default function RootLayout({

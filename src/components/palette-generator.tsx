@@ -82,7 +82,7 @@ export function PaletteGenerator({ initialPalette }: { initialPalette?: Palette 
   ];
 
   return (
-    <main className="flex-1 flex flex-col">
+    <main className="flex-1 flex flex-col w-4/5 m-auto">
       <div className="flex-1 p-2 flex flex-col gap-2 md:grid md:grid-cols-4 md:grid-rows-5">
         {colors.map((color, index) => (
           <ColorColumn

@@ -34,7 +34,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { ArrowLeftFromLineIcon, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -110,8 +110,15 @@ export function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
-      <CardHeader>
+    <Card className="mx-auto w-full h-full flex  justify-center flex-col">
+      <Button asChild className="w-24 h-24 rounded-full text-sm m-2" >
+        <Link href={'/'}>
+          <ArrowLeftFromLineIcon />
+          Go back
+        </Link>
+      </Button>
+      <CardHeader className="text-center space-y-3">
+        
         <CardTitle className="text-2xl">
           {mode === "login" ? "Login" : "Sign Up"}
         </CardTitle>
@@ -167,7 +174,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               </span>
             </div>
           </div>
-          <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isGoogleLoading}>
+          <Button variant="secondary" className="w-full" onClick={handleGoogleSignIn} disabled={isGoogleLoading}>
             {isGoogleLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (

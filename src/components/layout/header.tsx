@@ -17,6 +17,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+import Themetoggler from "./themetoggler";
 
 export function Header() {
   const { setTheme, theme } = useTheme();
@@ -29,24 +31,16 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-2 mb-4 px-3 z-50 text-white rounded-full shadow-md flex items-center justify-between  w-4/5 m-auto bg-primary">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <Palette className="h-6 w-6 text-primary" />
-            <span className="font-bold sm:inline-block">Palette Prodigy</span>
+            <Image src={'/images/logo.png'} width={20} height={20} alt="logo img" />
+            <span className="font-bold sm:inline-block">Hue forge</span>
           </Link>
         </div>
-        <nav className="flex items-center gap-4 text-sm">
-          {user && (
-            <Link href="/dashboard" className="text-foreground/60 transition-colors hover:text-foreground/80">
-              Dashboard
-            </Link>
-          )}
-        </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
           <Button
-            variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             aria-label="Toggle theme"
@@ -57,36 +51,7 @@ export function Header() {
           {loading ? (
             <div className="h-8 w-16 animate-pulse rounded-md bg-muted" />
           ) : user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.photoURL ?? ''} alt={user.displayName ?? ''} />
-                    <AvatarFallback>{user.email?.[0].toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user.displayName ?? 'User'}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {user.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => router.push('/dashboard')}>
-                  <LayoutGrid className="mr-2 h-4 w-4" />
-                  <span>Dashboard</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <Themetoggler />
           ) : (
             <nav className="flex items-center gap-2">
               <Button variant="ghost" asChild>
