@@ -13,9 +13,10 @@ interface ColorColumnProps {
   color: Color;
   onToggleLock: () => void;
   onColorChange: (newHex: string) => void;
+  className?: string;
 }
 
-export function ColorColumn({ color, onToggleLock, onColorChange }: ColorColumnProps) {
+export function ColorColumn({ color, onToggleLock, onColorChange, className }: ColorColumnProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(color.hex);
   const [copied, setCopied] = useState(false);
@@ -70,44 +71,43 @@ export function ColorColumn({ color, onToggleLock, onColorChange }: ColorColumnP
 
   return (
     <div
-      className="relative flex-1 flex items-center justify-between px-4 md:px-8 transition-colors duration-500"
+      className={cn(
+        "relative flex items-center justify-center transition-colors duration-500 rounded-lg overflow-hidden group cursor-pointer",
+        className
+      )}
       style={{ backgroundColor: color.hex }}
+      onClick={() => !isEditing && setIsEditing(true)}
     >
-      <div className={cn("flex items-center gap-4", textColorClass)}>
-        {isEditing ? (
+      {isEditing ? (
           <Input
             ref={inputRef}
             type="text"
             value={inputValue.toUpperCase()}
+            onClick={(e) => e.stopPropagation()}
             onChange={(e) => setInputValue(e.target.value)}
             onBlur={handleEditBlur}
             onKeyDown={handleKeyDown}
             className={cn(
-                "w-32 bg-transparent text-center font-mono text-2xl font-bold h-auto p-2",
-                "border-2 rounded-lg focus-visible:ring-offset-0 focus-visible:ring-2",
-                textColorClass,
-                textColorClass === 'text-white' 
-                ? 'border-white/20 focus-visible:border-white/50 focus-visible:ring-white/50' 
-                : 'border-black/20 focus-visible:border-black/50 focus-visible:ring-black/50'
+                "w-32 bg-background/80 backdrop-blur-sm text-center font-mono text-2xl font-bold h-auto p-2 z-20",
+                "border-2 rounded-lg"
             )}
-          />
-        ) : (
-          <h2
-            className="text-2xl font-bold font-mono cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          >
+        />
+      ) : (
+        <h2 className={cn("text-2xl font-bold font-mono", textColorClass)}>
             {color.hex.toUpperCase()}
-          </h2>
-        )}
-      </div>
+        </h2>
+      )}
 
-      <div className="flex items-center justify-center space-x-2">
-        <Button variant="ghost" size="icon" onClick={handleCopy} className={cn("hover:bg-white/20", textColorClass)}>
-          {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+      <div className={cn(
+        "absolute bottom-2 right-2 z-10 flex items-center justify-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity", 
+        isEditing && "opacity-100"
+      )}>
+        <Button variant="ghost" size="icon" onClick={(e) => {e.stopPropagation(); handleCopy();}} className={cn("hover:bg-white/20 h-8 w-8", textColorClass)}>
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
           <span className="sr-only">Copy color</span>
         </Button>
-        <Button variant="ghost" size="icon" onClick={onToggleLock} className={cn("hover:bg-white/20", textColorClass)}>
-          {color.isLocked ? <Lock className="h-5 w-5" /> : <Unlock className="h-5 w-5" />}
+        <Button variant="ghost" size="icon" onClick={(e) => {e.stopPropagation(); onToggleLock();}} className={cn("hover:bg-white/20 h-8 w-8", textColorClass)}>
+          {color.isLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
           <span className="sr-only">{color.isLocked ? 'Unlock color' : 'Lock color'}</span>
         </Button>
       </div>

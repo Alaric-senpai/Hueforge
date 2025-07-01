@@ -10,6 +10,7 @@ import { RotateCw, Save } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const INITIAL_PALETTE: Color[] = [
   { hex: "#F94144", isLocked: false },
@@ -72,19 +73,28 @@ export function PaletteGenerator({ initialPalette }: { initialPalette?: Palette 
     }
   };
 
+  const placements = [
+    "md:col-span-2 md:row-span-3",
+    "md:col-start-3 md:col-span-2 md:row-span-2",
+    "md:col-start-1 md:row-start-4 md:col-span-1 md:row-span-2",
+    "md:col-start-2 md:row-start-4 md:col-span-3 md:row-span-2",
+    "md:col-start-3 md:row-start-3 md:col-span-2 md:row-span-1",
+  ];
+
   return (
     <main className="flex-1 flex flex-col">
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 p-2 flex flex-col gap-2 md:grid md:grid-cols-4 md:grid-rows-5">
         {colors.map((color, index) => (
           <ColorColumn
             key={index}
+            className={cn("min-h-[15vh] md:min-h-0", placements[index])}
             color={color}
             onToggleLock={() => toggleLock(index)}
             onColorChange={(newHex) => handleColorChange(index, newHex)}
           />
         ))}
       </div>
-      <div className="container mx-auto flex justify-center items-center py-4 md:py-6 gap-4 border-t">
+      <div className="container mx-auto flex justify-center items-center py-4 md:py-6 gap-4 border-t bg-background">
         <Button onClick={generatePalette} size="lg" className="gap-2">
           <RotateCw />
           Generate Palette
