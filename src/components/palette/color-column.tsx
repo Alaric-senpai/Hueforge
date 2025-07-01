@@ -70,10 +70,10 @@ export function ColorColumn({ color, onToggleLock, onColorChange }: ColorColumnP
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center p-4 h-full transition-colors duration-500"
+      className="relative flex-1 flex items-center justify-between px-4 md:px-8 transition-colors duration-500"
       style={{ backgroundColor: color.hex }}
     >
-      <div className={cn("flex flex-col items-center space-y-4", textColorClass)}>
+      <div className={cn("flex items-center gap-4", textColorClass)}>
         {isEditing ? (
           <Input
             ref={inputRef}
@@ -82,7 +82,14 @@ export function ColorColumn({ color, onToggleLock, onColorChange }: ColorColumnP
             onChange={(e) => setInputValue(e.target.value)}
             onBlur={handleEditBlur}
             onKeyDown={handleKeyDown}
-            className={cn("w-28 text-center font-mono text-2xl font-bold bg-transparent border-2", textColorClass)}
+            className={cn(
+                "w-32 bg-transparent text-center font-mono text-2xl font-bold h-auto p-2",
+                "border-2 rounded-lg focus-visible:ring-offset-0 focus-visible:ring-2",
+                textColorClass,
+                textColorClass === 'text-white' 
+                ? 'border-white/20 focus-visible:border-white/50 focus-visible:ring-white/50' 
+                : 'border-black/20 focus-visible:border-black/50 focus-visible:ring-black/50'
+            )}
           />
         ) : (
           <h2
@@ -94,7 +101,7 @@ export function ColorColumn({ color, onToggleLock, onColorChange }: ColorColumnP
         )}
       </div>
 
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-center space-x-2 bg-black/20 backdrop-blur-sm p-2 rounded-lg">
+      <div className="flex items-center justify-center space-x-2">
         <Button variant="ghost" size="icon" onClick={handleCopy} className={cn("hover:bg-white/20", textColorClass)}>
           {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
           <span className="sr-only">Copy color</span>

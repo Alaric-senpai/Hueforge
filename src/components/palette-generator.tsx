@@ -40,7 +40,7 @@ export function PaletteGenerator({ initialPalette }: { initialPalette?: Palette 
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space" && !(e.target instanceof HTMLInputElement)) {
+      if (e.code === "Space" && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)) {
         e.preventDefault();
         generatePalette();
       }
@@ -74,7 +74,7 @@ export function PaletteGenerator({ initialPalette }: { initialPalette?: Palette 
 
   return (
     <main className="flex-1 flex flex-col">
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-5">
+      <div className="flex-1 flex flex-col">
         {colors.map((color, index) => (
           <ColorColumn
             key={index}
@@ -84,10 +84,10 @@ export function PaletteGenerator({ initialPalette }: { initialPalette?: Palette 
           />
         ))}
       </div>
-      <div className="container mx-auto flex justify-center items-center py-4 md:py-6 gap-4 bg-background/80 backdrop-blur-sm">
+      <div className="container mx-auto flex justify-center items-center py-4 md:py-6 gap-4 border-t">
         <Button onClick={generatePalette} size="lg" className="gap-2">
           <RotateCw />
-          Regenerate Palette
+          Generate Palette
         </Button>
         {user ? (
           <SavePaletteDialog colors={colors} existingPalette={initialPalette} />
