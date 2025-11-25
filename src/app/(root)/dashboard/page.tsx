@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout/header";
 import { ProtectedRoute } from "@/hooks/use-auth";
 import { PaletteGrid } from "@/components/dashboard/palette-grid";
 import { Suspense } from "react";
